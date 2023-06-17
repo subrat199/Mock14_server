@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const auth = (req,res,next)=>{
-    const  token  = localStorage.getItem("token");
+    const  token  = JSON.parse(localStorage.getItem("token"))
    
     if(token){
         try {
