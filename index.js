@@ -4,7 +4,7 @@ const { connection } = require("./db");
 const { userRouter } = require("./routes/User.routes");
 const {auth}=require("./Middlewere/authMiddleware");
 const jwt = require("jsonwebtoken");
-// const { userProfile } = require("./model/userProfile");
+const { quizRouter } = require("./routes/user.quiz");
 const app = express();
 app.use(express.json());
 app.use(cors())
@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     res.send("welcome Home page");
   });
 app.use(auth)
-// app.use("/profile",userProfileRouter)
+app.use("/quiz",quizRouter)
 app.listen(8080, async () => {
   try {
     await connection;
