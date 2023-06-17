@@ -41,47 +41,28 @@ userRouter.post("/signup",async (req,res)=>{
       }
 })
 userRouter.post("/login",async (req,res)=>{
-    // const {email,password}=req.body
-    // try {
-    //     const user= await userModel.findOne({email})
-    //     if(user){
-    //         bcrypt.compare(password, user.password, (err, result)=> {
-    //            if(result){
-    //             console.log(user)
-    //             const token = jwt.sign({userId:user._id }, 'masai')
-
-    //             res.status(200).send({"mesg":"Login SuccessFull","token":token})
-    //            }else{
-    //             res.status(200).send("Wrong Credentials")
-    //            }
-    //         });
-    //     }else {
-    //         res.status(200).send("Login Failure")
-    //     }
-    // } catch (error) {
-    //     console.log(error)
-    //     res.status(400).send({"message":error.message})
-    // }
+    const {email,password}=req.body
     try {
-        const { email, password } = req.body;
-    
-        // Check if user exists
-        const user = await userModel.findOne({ email });
-        if (!user) {
-          return res.status(401).json({ message: 'Invalid credentials' });
+        const user= await userModel.findOne({email})
+        if(user){
+            bcrypt.compare(password, user.password, (err, result)=> {
+               if(result){
+                console.log(user)
+                const token = jwt.sign({userId:user._id }, 'masai')
+
+                res.status(200).send({"mesg":"Login SuccessFull","token":token})
+               }else{
+                res.status(200).send("Wrong Credentials")
+               }
+            });
+        }else {
+            res.status(200).send("Login Failure")
         }
-    
-        // Compare passwords
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-          return res.status(401).json({ message: 'Invalid credentials' });
-        }
-    
-        res.status(200).json({ message: 'Login successful' });
-      } catch (error) {
-        console.error('Error in login:', error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({"message":error.message})
+    }
+   
 })
 module.exports={
     userRouter
