@@ -5,7 +5,7 @@ const auth = (req,res,next)=>{
     if(token){
         try {
             const decoded= jwt.verify(token.split(" ")[1], "masai"); 
-            console.log(decoded)
+            // console.log(decoded)
             const userId=decoded.userId
             req.body.userId = userId
             if(decoded){
