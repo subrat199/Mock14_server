@@ -12,7 +12,7 @@ app.use("/users", userRouter);
 app.get("/", (req, res) => {
     res.send("welcome Home page");
   });
-app.use(auth)
+// app.use(auth)
 app.use("/quiz",quizRouter)
 app.listen(8080, async () => {
   try {
